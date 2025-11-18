@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bail Reckoner - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Optional: Add Google Fonts for more elegant typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('home') }}">Bail Reckoner Portal</a> <!-- Assuming you have an index route -->
+            </div>
+            <nav class="main-nav">
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+
+
+                <!-- Add other nav links here if needed -->
+               
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1>Upholding Justice, Ensuring Fairness</h1>
+            <p>Your trusted partner in navigating the legal landscape.</p>
+            <a href="{{ url_for('register') }}" class="cta-button">Get Started</a>
+        </div>
+        <!-- Background image is applied via CSS -->
+    </section>
+
+    <main class="container content-area">
+        <section id="services" class="services-section">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="{{ url_for('static', filename='images/consultation.jfif') }}" alt="Legal Consultation"> <!-- Placeholder image -->
+                    <h3>Legal Consultation</h3>
+                    <p>Expert advice tailored to your specific situation.</p>
+                </div>
+                <div class="service-card">
+                    <img src="{{ url_for('static', filename='images/Representation.jpg') }}" alt="Case Representation"> <!-- Placeholder image -->
+                    <h3>Case Representation</h3>
+                    <p>Dedicated advocates fighting for your rights in court.</p>
+                </div>
+                <div class="service-card">
+                    <img src="{{ url_for('static', filename='images/documentation.avif') }}" alt="Document Preparation"> <!-- Placeholder image -->
+                    <h3>Document Preparation</h3>
+                    <p>Precise and compliant legal document drafting.</p>
+                </div>
+                 <div class="service-card">
+                    <img src="{{ url_for('static', filename='images/mediation.jpg') }}" alt="Mediation Services"> <!-- Placeholder image -->
+                    <h3>Mediation Services</h3>
+                    <p>Facilitating fair resolutions outside the courtroom.</p>
+                </div>                    <!-- == ADDED SERVICE CARD 1 == -->
+                <div class="service-card">
+                    <img src="{{ url_for('static', filename='images/legal-research.jfif') }}" alt="Legal Research"> <!-- Placeholder image -->
+                    <h3>Legal Research</h3>
+                    <p>In-depth analysis and research for complex legal matters.</p>
+                </div>
+                <!-- == ADDED SERVICE CARD 2 == -->
+                <div class="service-card">
+                    <img src="{{ url_for('static', filename='images/online-resolution.webp') }}" alt="Online Dispute Resolution"> <!-- Placeholder image -->
+                    <h3>Online Resolution</h3>
+                    <p>Convenient and efficient dispute resolution via online platforms.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+             <h2>About Us</h2>
+             <p>We are committed to providing accessible and effective legal services to our community. Our team comprises experienced professionals dedicated to the principles of justice and integrity. Learn more about our mission and values.</p>
+             <!-- Add more content about the system/organization -->
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>© 2025 Bail Reckoner Portal. All Rights Reserved.</p>
+            <nav class="footer-nav">
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Contact Us</a>
+            </nav>
+        </div>
+    </footer>
+
+</body>
+</html>

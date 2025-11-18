@@ -1,0 +1,32 @@
+/* --- Specific Container Styling for Login Page --- */
+
+/* Adjust top margin if you have a fixed header, same as register */
+.login-container {
+    margin-top: 120px; /* Match the margin-top of .register-container */
+    margin-bottom: 60px;
+}
+
+/* --- Optional: Styling for Checkbox (if you add 'Remember Me') --- */
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* Adjust spacing as needed */
+}
+
+.form-check-input {
+  width: auto; /* Override default input width */
+  margin-right: 0.5rem; /* Space between checkbox and label */
+  margin-top: -0.1rem; /* Fine-tune vertical alignment */
+}
+
+.form-check-label {
+  margin-bottom: 0; /* Override default label margin */
+  font-weight: normal; /* Make checkbox label less prominent than field labels */
+  font-size: 0.9rem;
+  color: #555;
+}
+
+
+/* --- Responsive Adjustments (already covered by .form-container query) --- */
+/* The existing @media query for .form-container should handle responsiveness */
+/* @media (max-width: 500px) { ... } */

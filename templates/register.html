@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Justice System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-gray: #f5f7fa;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #7f8c8d;
+            --success-color: #27ae60;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            color: var(--primary-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .form-container:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            font-size: 28px;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            border-radius: 3px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 15px 14px 40px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: var(--transition);
+            background-color: #f9f9f9;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            background-color: white;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 38px;
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .conditional-field {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            padding: 15px;
+            background-color: rgba(52, 152, 219, 0.05);
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .court-type-options {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .court-type-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .court-type-option input {
+            margin-right: 8px;
+            width: auto;
+            padding: 0;
+        }
+
+        .court-type-option label {
+            margin-bottom: 0;
+            font-weight: 400;
+        }
+
+        .submit-button {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+            font-family: 'Lato', sans-serif;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(to right, #2980b9, #1a252f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .form-link {
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--dark-gray);
+            text-align: center;
+            position: relative;
+        }
+
+        .form-link::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ddd, transparent);
+        }
+
+        .form-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .form-link a:hover {
+            color: var(--primary-color);
+        }
+
+        .form-link a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .form-link a:hover::after {
+            width: 100%;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 30px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .court-type-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+    <script>
+        // State and district data
+        let statesData = [];
+
+        // Function to toggle fields based on role
+        function toggleRoleFields() {
+            const role = document.getElementById('role').value;
+            
+            // Hide all conditional fields first
+            document.querySelectorAll('.conditional-field').forEach(field => {
+                field.style.display = 'none';
+                field.querySelectorAll('[required]').forEach(input => {
+                    input.required = false;
+                });
+            });
+            
+            // Show relevant fields based on role
+            if (role === 'Judge') {
+                document.getElementById('judge-fields').style.display = 'block';
+                document.getElementById('judge-id').required = true;
+                document.getElementById('court-type-field').style.display = 'block';
+                document.getElementById('state-field').style.display = 'block';
+                document.getElementById('state').required = true;
+            } 
+            else if (role === 'Legal Advocate') {
+                document.getElementById('advocate-fields').style.display = 'block';
+                document.getElementById('legal-aid-id').required = true;
+            }
+            
+            // Reset district when state changes (only for Judge)
+            if (role === 'Judge') {
+                populateDistricts();
+            }
+        }
+
+        // Function to populate states and districts
+        async function loadStatesAndDistricts() {
+            try {
+                const response = await fetch('/static/states-and-districts.json');
+                statesData = await response.json();
+                
+                const stateSelect = document.getElementById('state');
+                stateSelect.innerHTML = '<option value="" disabled selected>Select State</option>';
+                
+                statesData.states.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state.state;
+                    option.textContent = state.state;
+                    stateSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading states and districts:', error);
+            }
+        }
+
+        // Function to populate districts based on selected state
+        function populateDistricts() {
+            const stateSelect = document.getElementById('state');
+            const districtSelect = document.getElementById('district');
+            const selectedState = stateSelect.value;
+            
+            districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+            
+            if (!selectedState) return;
+            
+            const stateInfo = statesData.states.find(state => state.state === selectedState);
+            if (stateInfo) {
+                stateInfo.districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load states and districts
+            loadStatesAndDistricts();
+            
+            // Set up event listeners
+            document.getElementById('role').addEventListener('change', toggleRoleFields);
+            document.getElementById('state').addEventListener('change', populateDistricts);
+            
+            // Add icons to select elements
+            document.querySelectorAll('select').forEach(select => {
+                select.style.paddingLeft = '40px';
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-chevron-down';
+                icon.style.position = 'absolute';
+                icon.style.right = '15px';
+                icon.style.top = '38px';
+                icon.style.color = 'var(--dark-gray)';
+                select.parentNode.appendChild(icon);
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="form-container register-container">
+        <h1><i class="fas fa-balance-scale"></i> Justice System Registration</h1>
+        <form method="POST" action="{{ url_for('register') }}">
+
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <i class="fas fa-user"></i>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address">
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <i class="fas fa-user-tag"></i>
+                <input type="text" id="username" name="username" required placeholder="Choose a username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" name="password" required placeholder="Create a password">
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <i class="fas fa-user-tie"></i>
+                <select id="role" name="role" required onchange="toggleRoleFields()">
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="Judge">Judge</option>
+                    <option value="Prisoner">Prisoner</option>
+                    <option value="Legal Advocate">Legal Advocate</option>
+                </select>
+            </div>
+
+            <!-- Judge Specific Fields -->
+            <div id="judge-fields" class="conditional-field">
+                <div class="form-group">
+                    <label for="judge-id">Judge ID:</label>
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" id="judge-id" name="judge_id" placeholder="Enter your Judge ID">
+                </div>
+                
+                <div id="court-type-field" class="form-group">
+                    <label>Court Type:</label>
+                    <div class="court-type-options">
+                        <div class="court-type-option">
+                            <input type="radio" id="session-court" name="court_type" value="Session Court" required>
+                            <label for="session-court"><i class="fas fa-gavel"></i> Session Court</label>
+                        </div>
+                        <div class="court-type-option">
+                            <input type="radio" id="magistrate-court" name="court_type" value="Magistrate Court" required>
+                            <label for="magistrate-court"><i class="fas fa-gavel"></i> Magistrate Court</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- State and District Fields (only for Judge) -->
+                <div id="state-field" class="form-group">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="state">State:</label>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="state" name="state" required>
+                                <option value="" disabled selected>Select State</option>
+                                <!-- States will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="district">District:</label>
+                            <i class="fas fa-map-marked-alt"></i>
+                            <select id="district" name="district" required>
+                                <option value="" disabled selected>Select District</option>
+                                <!-- Districts will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Advocate Specific Fields -->
+            <div id="advocate-fields" class="conditional-field">
+                <div class="form-group">
+                    <label for="legal-aid-id">Legal Aid ID:</label>
+                    <i class="fas fa-id-badge"></i>
+                    <input type="text" id="legal-aid-id" name="legal_aid_id" placeholder="Enter your Legal Aid ID">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+        </form>
+
+        <p class="form-link">Already have an account? <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login here</a></p>
+    </div>
+
+</body>
+</html>

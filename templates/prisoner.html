@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bail Eligibility Checker</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .dashboard-sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .sidebar-header h3 {
+            margin: 0;
+            font-family: 'Merriweather', serif;
+        }
+        
+        .sidebar-header p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            color: #bdc3c7;
+        }
+        
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+        
+        .sidebar-nav a {
+            display: block;
+            padding: 10px 20px;
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-nav a:hover {
+            background-color: #34495e;
+        }
+        
+        .sidebar-nav a.active {
+            background-color: #3498db;
+            border-left: 4px solid #2980b9;
+        }
+        
+        .sidebar-nav i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .logout-link {
+            color: #e74c3c !important;
+        }
+        
+        .dashboard-content {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .content-header {
+            margin-bottom: 30px;
+        }
+        
+        .content-header h1 {
+            font-family: 'Merriweather', serif;
+            margin: 0 0 10px;
+            color: #2c3e50;
+        }
+        
+        .content-header p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+        
+        /* Form Styles */
+        .form-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .submit-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .secondary-button {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .secondary-button:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* Enhanced Prediction Meter Styles */
+        .prediction-container {
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .prediction-container::before,
+        .prediction-container::after {
+            content: "";
+            display: block;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ddd, transparent);
+            margin: 20px 0;
+        }
+        
+        .prediction-title {
+            font-family: 'Merriweather', serif;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        
+        .prediction-result {
+            font-size: 1.2em;
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .prediction-result strong {
+            color: #3498db;
+            font-size: 1.3em;
+        }
+        
+        .prediction-meter {
+            position: relative;
+            height: 60px;
+            background: #f0f0f0;
+            border-radius: 30px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .prediction-progress {
+            height: 100%;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #ff5e5e 0%, #3498db 50%, #28a745 100%);
+            width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: width 1.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .prediction-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+            
+            .dashboard-sidebar {
+                width: 100%;
+            }
+            
+            .prediction-container {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .prediction-meter {
+                height: 50px;
+                border-radius: 25px;
+            }
+            
+            .prediction-progress {
+                border-radius: 25px;
+                font-size: 16px;
+                padding-right: 15px;
+            }
+            
+            .prediction-result {
+                font-size: 1em;
+            }
+        }
+        <!-- Add this in your <style> section, after the existing styles -->
+            /* Enhanced Content Header */
+            .content-header {
+                margin-bottom: 40px;
+                padding: 25px;
+                background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                border-left: 4px solid #3498db;
+            }
+            
+            .content-header h1 {
+                font-family: 'Merriweather', serif;
+                margin: 0 0 10px;
+                color: #2c3e50;
+                font-size: 2.2rem;
+                font-weight: 700;
+                letter-spacing: -0.5px;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            }
+            
+            .content-header p {
+                margin: 0;
+                color: #5a6a7a;
+                font-size: 1.1rem;
+                line-height: 1.5;
+                max-width: 700px;
+            }
+            
+            /* Enhanced Form Section */
+            .form-section {
+                background-color: white;
+                padding: 35px;
+                border-radius: 10px;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+                margin-top: 20px;
+                border: 1px solid #e9ecef;
+            }
+            
+            .form-group label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: 600;
+                color: #2c3e50;
+                font-size: 0.95rem;
+                letter-spacing: 0.3px;
+            }
+            
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid #d1d7e0;
+                border-radius: 6px;
+                font-family: 'Lato', sans-serif;
+                font-size: 0.95rem;
+                transition: all 0.3s ease;
+                background-color: #f8fafc;
+            }
+            
+            .form-group input:focus,
+            .form-group select:focus {
+                border-color: #3498db;
+                box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+                outline: none;
+                background-color: white;
+            }
+            
+            /* Enhanced Prediction Container */
+            .prediction-container {
+                margin: 40px auto;
+                max-width: 700px;
+                text-align: center;
+                animation: fadeIn 0.8s ease-out;
+                background: white;
+                padding: 40px;
+                border-radius: 12px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+                position: relative;
+                border-top: 4px solid #3498db;
+            }
+            
+            .prediction-title {
+                font-family: 'Merriweather', serif;
+                color: #2c3e50;
+                margin-bottom: 25px;
+                font-size: 1.6rem;
+                font-weight: 700;
+            }
+            
+            .prediction-result {
+                font-size: 1.2rem;
+                margin-top: 30px;
+                padding: 20px;
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                border-left: 4px solid #3498db;
+                line-height: 1.6;
+            }
+            
+            .prediction-result strong {
+                color: #3498db;
+                font-size: 1.4em;
+                font-weight: 700;
+            }
+            
+            /* Enhanced Action Button */
+            .actions-section {
+                text-align: center;
+                margin: 40px 0;
+            }
+            
+            .primary-button {
+                background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+                color: white;
+                border: none;
+                padding: 14px 28px;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .primary-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(52, 152, 219, 0.3);
+            }
+            
+            /* Responsive Adjustments */
+            @media (max-width: 768px) {
+                .content-header {
+                    padding: 20px;
+                }
+                
+                .content-header h1 {
+                    font-size: 1.8rem;
+                }
+                
+                .form-section {
+                    padding: 25px;
+                }
+                
+                .prediction-container {
+                    padding: 30px 20px;
+                }
+            }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <script>
+        const ipcData = {{ ipc_data | tojson }};
+        function updateFields() {
+            const section = document.getElementById('section').value;
+            const offense = document.getElementById('offense');
+            const cognizable = document.getElementById('cognizable');
+            const bailable = document.getElementById('bailable');
+
+            if (ipcData[section] && ipcData[section].length > 0) {
+                const entry = ipcData[section][0];
+                offense.value = entry.Offense;
+                cognizable.value = entry.Cognizable;
+                bailable.value = entry.Bailable;
+            } else {
+                offense.value = "";
+                cognizable.value = "";
+                bailable.value = "";
+            }
+        }
+
+        function validateForm() {
+            const section = document.getElementById('section').value;
+            const age = document.forms[0]["age"].value;
+            const gender = document.forms[0]["gender"].value;
+            const priorRecord = document.forms[0]["prior_record"].value;
+            const residence = document.forms[0]["residence"].value;
+            const jailDays = document.forms[0]["jail_days"].value;
+
+            if (!section || !age || !gender || !priorRecord || !residence || !jailDays) {
+                alert("⚠️ Please fill out all required fields before submitting.");
+                return false;
+            }
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if prediction_text %}
+            // Animate the progress bar
+            const progressBar = document.querySelector('.prediction-progress');
+            if (progressBar) {
+                setTimeout(() => {
+                    progressBar.style.width = '{{ probability }}%';
+                }, 300);
+            }
+            {% endif %}
+        });
+    </script>
+</head>
+<body>
+
+<div class="dashboard-layout">
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-header">
+            <h3>Bail Reckoner</h3>
+            <p>Welcome, {{ current_user.name }}</p>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{{ url_for('prisoner_dashboard') }}" class="{{ 'active' if request.endpoint == 'prisoner_dashboard' else '' }}">
+                <i class="fas fa-list-ul fa-fw"></i> My Bail Applications
+            </a>
+            <a href="{{ url_for('prisoner_form') }}" class="{{ 'active' if request.endpoint == 'prisoner_form' else '' }}">
+                <i class="fas fa-balance-scale fa-fw"></i> Bail Eligibility Checker
+            </a>
+            <a href="{{ url_for('apply_for_bail') }}" class="{{ 'active' if request.endpoint == 'apply_for_bail' else '' }}">
+                <i class="fas fa-file-signature fa-fw"></i> Apply for Bail
+            </a>
+            <a href="{{ url_for('logout') }}" class="logout-link">
+                <i class="fas fa-sign-out-alt fa-fw"></i> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <main class="dashboard-content">
+        <header class="content-header">
+            <h1>Bail Eligibility Checker</h1>
+            <p>Fill the details below to estimate your eligibility for bail.</p>
+        </header>
+
+        {% if prediction_text %}
+        <div class="prediction-container">
+            <div class="prediction-title">Bail Eligibility Prediction</div>
+            
+            <div class="prediction-meter">
+                <div class="prediction-progress" style="width: {{ probability }}%;">
+                    {{ probability }}%
+                </div>
+            </div>
+            <div class="prediction-labels">
+                <span>Low (0-40%)</span>
+                <span>Medium (40-70%)</span>
+                <span>High (70-100%)</span>
+            </div>
+            
+            <div class="prediction-result">
+                The chance of granting bail is <strong>{{ probability }}%</strong> based on the provided information.
+            </div>
+        </div>
+        {% endif %}
+
+        {% if prediction_text %}
+        <section class="content-section actions-section" style="margin-top: 30px; text-align: center;">
+            <a href="{{ url_for('apply_for_bail') }}" class="submit-button" style="display: inline-flex; align-items: center; gap: 8px;">
+                <i class="fas fa-file-signature"></i> Apply for Bail Now
+            </a>
+        </section>
+        {% endif %}
+
+        <section class="form-section">
+            <form action="/predict" method="post" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="section">IPC Section:</label>
+                    <select name="section" id="section" onchange="updateFields()" required>
+                        <option value="">Select Section</option>
+                        {% for sec in sections %}
+                            <option value="{{ sec }}" {{ 'selected' if request.form.get('section') == sec else '' }}>{{ sec }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="offense">Offense:</label>
+                    <input type="text" name="offense" id="offense" value="{{ request.form.get('offense', '') }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select name="gender" required>
+                        <option value="">Select</option>
+                        <option value="Male" {{ 'selected' if request.form.get('gender') == 'Male' else '' }}>Male</option>
+                        <option value="Female" {{ 'selected' if request.form.get('gender') == 'Female' else '' }}>Female</option>
+                        <option value="Other" {{ 'selected' if request.form.get('gender') == 'Other' else '' }}>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prior_record">Prior Record:</label>
+                    <select name="prior_record" required>
+                        <option value="">Select</option>
+                        <option value="No" {{ 'selected' if request.form.get('prior_record') == 'No' else '' }}>No</option>
+                        <option value="Yes" {{ 'selected' if request.form.get('prior_record') == 'Yes' else '' }}>Yes</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="residence">Residence Stability:</label>
+                    <select name="residence" required>
+                        <option value="">Select</option>
+                        <option value="Permanent" {{ 'selected' if request.form.get('residence') == 'Permanent' else '' }}>Permanent</option>
+                        <option value="Temporary" {{ 'selected' if request.form.get('residence') == 'Temporary' else '' }}>Temporary</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="jail_days">Days Spent in Jail:</label>
+                    <input type="number" name="jail_days" min="0" placeholder="Number of days" value="{{ request.form.get('jail_days', '') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cognizable">Cognizable:</label>
+                    <input type="text" name="cognizable" id="cognizable" value="{{ request.form.get('cognizable', '') }}" readonly>
+                </div>
+
+                <!-- Hidden bailable field - still submitted with form but not visible -->
+                <input type="hidden" name="bailable" id="bailable" value="{{ request.form.get('bailable', '') }}">
+
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" name="age" step="1" value="{{ request.form.get('age', '') }}" required>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="submit-button">
+                        <i class="fas fa-check-circle"></i> Check Bail Eligibility
+                    </button>
+                    <a href="{{ url_for('prisoner_dashboard') }}" class="secondary-button">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

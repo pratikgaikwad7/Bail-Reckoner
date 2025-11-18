@@ -1,0 +1,126 @@
+/* --- Form Styling (General - can apply to Login too) --- */
+.form-container {
+    max-width: 450px; /* Limit width for readability */
+    margin: 60px auto; /* Center horizontally, add top/bottom margin */
+    padding: 2.5em 2em; /* Generous padding */
+    background-color: #ffffff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+    border: 1px solid #e0e0e0; /* Subtle border */
+}
+
+/* Style specific container if needed, e.g., adding more top margin if header is fixed */
+.register-container {
+    margin-top: 120px; /* Adjust if you have a fixed header, accounts for header height + spacing */
+    margin-bottom: 60px;
+}
+
+
+.form-container h1 {
+    font-family: 'Merriweather', serif;
+    color: #1a2b48; /* Dark Blue from home page */
+    text-align: center;
+    margin-bottom: 1.5em;
+    font-size: 2rem; /* Slightly smaller than page titles */
+}
+
+.form-group {
+    margin-bottom: 1.5em; /* Space between form fields */
+}
+
+.form-group label {
+    display: block; /* Label on its own line */
+    font-weight: 700; /* Bold labels */
+    margin-bottom: 0.5em; /* Space between label and input */
+    color: #333;
+    font-size: 0.9rem;
+    font-family: 'Lato', sans-serif;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"], /* Add other input types if needed */
+.form-group select {
+    width: 100%;
+    padding: 12px 15px; /* Comfortable padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Style for focus state */
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="email"]:focus,
+.form-group select:focus {
+    outline: none; /* Remove default browser outline */
+    border-color: #3498db; /* Highlight border on focus - using link color */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); /* Subtle glow effect */
+}
+
+/* Style placeholder text */
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+/* Button Styling */
+.submit-button {
+    /* Using styles similar to the home page CTA button */
+    display: block; /* Make button take full width */
+    width: 100%;
+    background-color: #e0ac69; /* Gold accent */
+    color: #1a2b48; /* Dark Blue text */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem; /* Slightly larger font */
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1.5em; /* Space above button */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.submit-button:hover {
+    background-color: #cfa05f; /* Darker gold */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Link below form */
+.form-link {
+    text-align: center;
+    margin-top: 1.5em;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.form-link a {
+    color: #3498db; /* Standard link blue */
+    font-weight: 600; /* Slightly bolder */
+    text-decoration: none;
+}
+
+.form-link a:hover {
+    text-decoration: underline;
+    color: #217dbb; /* Darker blue on hover */
+}
+
+/* --- Responsive Adjustments for Forms --- */
+@media (max-width: 500px) {
+    .form-container {
+        margin: 80px 15px 40px; /* Adjust margins for smaller screens */
+        padding: 2em 1.5em; /* Reduce padding */
+    }
+
+     .register-container {
+        margin-top: 100px; /* Adjust if needed based on fixed header */
+    }
+
+    .form-container h1 {
+        font-size: 1.8rem;
+    }
+}
