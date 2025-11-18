@@ -1,0 +1,407 @@
+/* --- Dashboard Layout --- */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh; /* Full height */
+    background-color: #f4f7f6; /* Light background for content area */
+}
+
+/* --- Dashboard Sidebar --- */
+.dashboard-sidebar {
+    width: 250px; /* Fixed width for sidebar */
+    background-color: #1a2b48; /* Dark Blue - consistent theme */
+    color: #ecf0f1; /* Light text */
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    position: fixed; /* Make sidebar fixed */
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1001; /* Above header if header wasn't fixed */
+}
+
+.sidebar-header {
+    padding: 1.5em 1.2em;
+    border-bottom: 1px solid #2c3e50; /* Slightly lighter border */
+    text-align: center;
+}
+
+.sidebar-header h3 {
+    color: #fff;
+    margin-bottom: 0;
+    font-family: 'Merriweather', serif;
+}
+
+.sidebar-nav {
+    flex-grow: 1; /* Allows nav to take remaining space */
+    padding-top: 1em;
+}
+
+.sidebar-nav a {
+    display: flex; /* Use flex for icon alignment */
+    align-items: center;
+    padding: 0.9em 1.5em;
+    color: #bdc3c7; /* Slightly muted light gray */
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-left: 3px solid transparent; /* For active indicator */
+}
+
+.sidebar-nav a:hover {
+    background-color: #2c3e50; /* Dark Slate Blue on hover */
+    color: #fff;
+    border-left-color: #e0ac69; /* Gold accent on hover */
+}
+
+.sidebar-nav a.active {
+    background-color: #2c3e50; /* Active state background */
+    color: #fff; /* White text for active */
+    font-weight: 600;
+    border-left-color: #e0ac69; /* Gold accent */
+}
+
+.sidebar-nav a i.fa-fw { /* Font Awesome fixed width icons */
+    margin-right: 0.8em; /* Space between icon and text */
+    font-size: 1.1em; /* Slightly larger icons */
+    width: 1.2em; /* Ensure icons align */
+    text-align: center;
+}
+
+.sidebar-nav a.logout-link {
+    margin-top: auto; /* Push logout link to the bottom */
+    border-top: 1px solid #2c3e50;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+/* --- Dashboard Content Area --- */
+.dashboard-content {
+    flex-grow: 1; /* Takes remaining space */
+    padding: 2em 2.5em; /* Generous padding */
+    margin-left: 250px; /* <<< IMPORTANT: Offset content by sidebar width */
+    overflow-y: auto; /* Allow content scrolling if needed */
+}
+
+.content-header {
+    padding-bottom: 1em;
+    margin-bottom: 2em;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.content-header h1 {
+    color: #1a2b48; /* Dark blue heading */
+    font-size: 2.2rem;
+    margin-bottom: 0; /* Adjust as needed */
+}
+
+.content-section {
+    background-color: #fff;
+    padding: 1.5em 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    margin-bottom: 2em;
+}
+
+.content-section h2 {
+    color: #2c3e50; /* Dark Slate Blue */
+    font-size: 1.6rem;
+    margin-bottom: 1em;
+    border-bottom: 2px solid #e0ac69; /* Gold accent underline */
+    padding-bottom: 0.3em;
+    display: inline-block; /* Keep underline tight */
+}
+
+/* Bail Application List */
+.application-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.application-item {
+    margin-bottom: 1em;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.application-item:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #3498db; /* Blue accent on hover */
+}
+
+.application-item a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 1.5em;
+    text-decoration: none;
+    color: #333;
+}
+
+.case-number {
+    font-weight: 600;
+    color: #1a2b48;
+    flex-basis: 30%; /* Allocate space */
+}
+
+.status-badge {
+    font-size: 0.9rem;
+    padding: 0.3em 0.8em;
+    border-radius: 15px; /* Pill shape */
+    font-weight: 600;
+    text-align: center;
+    flex-basis: 30%;
+    background-color: #eee; /* Default background */
+    color: #555; /* Default text */
+}
+
+/* Status-specific colors (Add more as needed) */
+.status-pending .status-badge { background-color: #f39c12; color: #fff; } /* Orange */
+.status-approved .status-badge { background-color: #2ecc71; color: #fff; } /* Green */
+.status-rejected .status-badge { background-color: #e74c3c; color: #fff; } /* Red */
+.status-submitted .status-badge { background-color: #3498db; color: #fff; } /* Blue */
+
+.details-link {
+    font-size: 0.9rem;
+    color: #3498db;
+    text-align: right;
+    flex-basis: 30%;
+}
+.details-link i {
+    margin-left: 0.4em;
+    transition: transform 0.3s ease;
+}
+.application-item a:hover .details-link i {
+    transform: translateX(4px);
+}
+
+
+/* No Data Message */
+.no-data-message {
+    background-color: #eaf2f8; /* Light blue background */
+    border: 1px solid #aed6f1;
+    color: #2e86c1;
+    padding: 1em 1.5em;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1rem;
+}
+.no-data-message i {
+    margin-right: 0.5em;
+}
+.button-inline {
+    margin-left: 1em;
+    font-weight: 600;
+}
+
+
+/* General Button Styles (Add if not already defined well) */
+.button {
+    display: inline-block;
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+}
+.button i { margin-right: 0.5em; }
+
+.primary-button {
+    background-color: #e0ac69; /* Gold Accent */
+    color: #1a2b48; /* Dark Blue Text */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.primary-button:hover {
+    background-color: #cfa05f; /* Darker Gold */
+    color: #1a2b48;
+    transform: translateY(-2px);
+}
+
+/* Actions Section */
+.actions-section {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    text-align: right; /* Align button to the right */
+}
+
+
+/* --- Responsive Design for Dashboard --- */
+@media (max-width: 992px) {
+    .dashboard-sidebar {
+        width: 200px; /* Slightly smaller sidebar */
+    }
+    .dashboard-content {
+        margin-left: 200px; /* Adjust offset */
+        padding: 1.5em;
+    }
+    .case-number, .status-badge, .details-link {
+        flex-basis: auto; /* Let items wrap more naturally */
+        margin-bottom: 0.3em;
+    }
+     .application-item a {
+        flex-direction: column;
+        align-items: flex-start;
+     }
+    .details-link { text-align: left; margin-top: 0.5em;}
+
+}
+
+@media (max-width: 768px) {
+    .dashboard-sidebar {
+        /* Option 1: Hide sidebar (requires JS toggle) */
+         /* position: fixed;
+         left: -250px; // Start hidden
+         transition: left 0.3s ease; */
+         /* Need JS to add a class to body/sidebar to show it */
+
+         /* Option 2: Make sidebar smaller / only icons (more complex) */
+
+         /* Option 3: Simple stack (less ideal for dashboards) */
+         /* width: 100%;
+         height: auto;
+         position: static;
+         box-shadow: none; */
+         /* This requires removing the margin-left on dashboard-content */
+         /* and likely changing dashboard-layout display */
+
+         /* For now, let's just make it very narrow */
+         width: 60px;
+         overflow: hidden; /* Hide text */
+    }
+    .dashboard-sidebar .sidebar-header h3 { font-size: 1rem; }
+    .sidebar-nav a { padding-left: 1em; padding-right: 1em; justify-content: center;}
+    .sidebar-nav a span { display: none; } /* Hide text */
+    .sidebar-nav a i { margin-right: 0;}
+
+
+    .dashboard-content {
+        margin-left: 60px; /* Adjust offset */
+        padding: 1em;
+    }
+     .content-header h1 { font-size: 1.8rem; }
+     .content-section h2 { font-size: 1.4rem; }
+}
+
+@media (max-width: 480px) {
+    /* Further adjustments if needed for very small screens */
+     .dashboard-content {
+        margin-left: 0; /* Example: Remove sidebar completely */
+     }
+     .dashboard-sidebar {
+        display: none; /* Example: Hide sidebar */
+        /* You'd need a hamburger menu button in the content area to toggle it */
+     }
+}
+.content-header {
+    margin-bottom: 20px;
+}
+
+.content-header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.content-header p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Form Section */
+.form-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group .button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+.secondary-button {
+    background-color: #f44336;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.secondary-button:hover {
+    background-color: #e53935;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .dashboard-content {
+        padding: 15px;
+    }
+
+    .form-section {
+        padding: 15px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Apply for Bail - Justice System</title>
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Lato', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    
+    .dashboard-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .dashboard-sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px 0;
+    }
+    
+    .sidebar-header {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid #34495e;
+    }
+    
+    .sidebar-header h3 {
+      margin: 0;
+      font-family: 'Merriweather', serif;
+    }
+    
+    .sidebar-header p {
+      margin: 5px 0 0;
+      font-size: 0.9em;
+      color: #bdc3c7;
+    }
+    
+    .sidebar-nav {
+      padding: 20px 0;
+    }
+    
+    .sidebar-nav a {
+      display: block;
+      padding: 10px 20px;
+      color: #ecf0f1;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .sidebar-nav a:hover {
+      background-color: #34495e;
+    }
+    
+    .sidebar-nav a.active {
+      background-color: #3498db;
+      border-left: 4px solid #2980b9;
+    }
+    
+    .sidebar-nav i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    .logout-link {
+      color: #e74c3c !important;
+    }
+    
+    .dashboard-content {
+      flex: 1;
+      padding: 30px;
+    }
+    
+    .content-header {
+      margin-bottom: 30px;
+    }
+    
+    .content-header h1 {
+      font-family: 'Merriweather', serif;
+      margin: 0 0 10px;
+      color: #2c3e50;
+    }
+    
+    .content-header p {
+      margin: 0;
+      color: #7f8c8d;
+    }
+    
+    /* Enhanced Form Styles */
+    .form-section {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 0.95rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      background-color: white;
+    }
+    
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    
+    /* Name Fields - Horizontal Layout */
+    .name-fields-container {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .name-field {
+      flex: 1;
+      position: relative;
+    }
+    
+    .name-field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 0.9rem;
+    }
+    
+    .name-field input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: 'Lato', sans-serif;
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+    
+    .name-field input:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      background-color: white;
+    }
+    
+    /* Button Styles */
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 35px;
+    }
+    
+    .submit-button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .submit-button:hover {
+      background-color: #2980b9;
+      transform: translateY(-1px);
+    }
+    
+    .secondary-button {
+      background-color: #95a5a6;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .secondary-button:hover {
+      background-color: #7f8c8d;
+      transform: translateY(-1px);
+    }
+    
+    /* IPC Section Styles */
+    .ipc-group {
+      background-color: #f8f9fa;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      position: relative;
+      border: 1px dashed #ddd;
+    }
+    
+    .remove-ipc {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    
+    .remove-ipc:hover {
+      background: #c82333;
+      transform: scale(1.1);
+    }
+    
+    /* Bail Score Styles */
+    .bail-score-display {
+      position: relative;
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 25px;
+    }
+    
+    .bail-score-meter {
+      height: 10px;
+      background: #e0e0e0;
+      border-radius: 5px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    
+    .meter-fill {
+      height: 100%;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #ff4d4d, #f9cb28, #4CAF50);
+      transition: width 0.5s ease;
+    }
+    
+    .score-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #7f8c8d;
+    }
+    
+    /* Contact/Surety Styles */
+    .contact-group {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      border: 1px solid #eee;
+    }
+    
+    .contact-group h4 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #3498db;
+      font-family: 'Merriweather', serif;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .dashboard-layout {
+        flex-direction: column;
+      }
+      
+      .dashboard-sidebar {
+        width: 100%;
+      }
+      
+      .name-fields-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .submit-button,
+      .secondary-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body>
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-header">
+      <h3>Bail Reckoner</h3>
+      <p>Welcome, {{ current_user.name }}</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="{{ url_for('prisoner_dashboard') }}" class="{{ 'active' if request.endpoint == 'prisoner_dashboard' else '' }}">
+        <i class="fas fa-list-ul fa-fw"></i> My Bail Applications
+      </a>
+      <a href="{{ url_for('prisoner_form') }}" class="{{ 'active' if request.endpoint == 'prisoner_form' else '' }}">
+        <i class="fas fa-balance-scale fa-fw"></i> Bail Eligibility Checker
+      </a>
+      <a href="{{ url_for('apply_for_bail') }}" class="active">
+        <i class="fas fa-file-signature fa-fw"></i> Apply for Bail
+      </a>
+      <a href="{{ url_for('logout') }}" class="logout-link">
+        <i class="fas fa-sign-out-alt fa-fw"></i> Logout
+      </a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-content">
+    <header class="content-header">
+      <h1>Apply for Bail</h1>
+      <p>Complete the form below to submit your bail application.</p>
+    </header>
+
+    <section class="content-section form-section">
+      <form method="POST" action="{{ url_for('apply_for_bail') }}">
+
+        <!-- Bail Score -->
+        <div class="form-group bail-score-display">
+          <label for="bail_score">My Bail Score:</label>
+          <input type="number" id="bail_score" name="bail_score" 
+                 value="{{ default_values.bail_score if default_values else '0' }}" min="0" max="100" step="0.1" readonly>
+          <div class="bail-score-meter">
+            <div class="meter-fill" id="meter-fill"></div>
+          </div>
+          <div class="score-indicator">
+            <span>Low</span>
+            <span>Medium</span>
+            <span>High</span>
+          </div>
+          <small class="form-text">This score is based on your previous prediction and case details—higher is better.</small>
+        </div>
+
+        <!-- Name Fields - Horizontal Layout -->
+        <div class="form-group">
+          <label>Full Name:</label>
+          <div class="name-fields-container">
+            <div class="name-field">
+              <label for="first_name">First Name*</label>
+              <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="name-field">
+              <label for="middle_name">Middle Name</label>
+              <input type="text" id="middle_name" name="middle_name">
+            </div>
+            <div class="name-field">
+              <label for="last_name">Last Name*</label>
+              <input type="text" id="last_name" name="last_name" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIR Number -->
+        <div class="form-group">
+          <label for="fir_number">FIR Number:</label>
+          <input type="text" id="fir_number" name="fir_number" value="{{ default_values.fir_number if default_values else '' }}" required>
+        </div>
+
+        <!-- Primary IPC Section & Offense -->
+        <div class="form-group">
+          <label for="primary_ipc">Primary IPC Section:</label>
+          <select name="primary_ipc" id="primary_ipc" onchange="updateFields()" required>
+            <option value="">Select Section</option>
+            {% for sec in sections %}
+              <option value="{{ sec }}" {% if default_values and default_values.primary_ipc == sec %}selected{% endif %}>{{ sec }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="primary_offense">Primary Offense:</label>
+          <input type="text" name="primary_offense" id="primary_offense" value="{{ default_values.primary_offense if default_values else '' }}" readonly required>
+        </div>
+
+        <!-- Add these fields after the Primary Offense field -->
+<div class="form-group">
+  <label for="primary_bailable">Bailable:</label>
+  <input type="text" name="primary_bailable" id="primary_bailable" 
+         value="{{ default_values.primary_bailable if default_values else '' }}" readonly>
+</div>
+
+<div class="form-group">
+  <label for="primary_cognizable">Cognizable:</label>
+  <input type="text" name="primary_cognizable" id="primary_cognizable" 
+         value="{{ default_values.primary_cognizable if default_values else '' }}" readonly>
+</div>
+
+<!-- Add this Prior Record section before the Date of Arrest field -->
+<div class="form-group ipc-group">
+  <label>Prior Record (if any)</label>
+  
+  <div class="form-group">
+    <label for="prior_ipc">IPC Section:</label>
+    <select name="prior_ipc" id="prior_ipc" onchange="updatePriorRecordFields()">
+      <option value="">Select Section</option>
+      {% for sec in sections %}
+        <option value="{{ sec }}">{{ sec }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="prior_offense">Offense:</label>
+    <input type="text" name="prior_offense" id="prior_offense" readonly>
+  </div>
+</div>
+
+        <!-- Date of Arrest -->
+        <div class="form-group">
+          <label for="arrest_date">Date of Arrest:</label>
+          <input type="date" id="arrest_date" name="arrest_date" value="{{ default_values.arrest_date if default_values else '' }}" required>
+        </div>
+
+        <!-- Age -->
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" value="{{ default_values.age if default_values else '' }}" required min="1" max="120">
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="Male" {% if default_values and default_values.gender == 'Male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if default_values and default_values.gender == 'Female' %}selected{% endif %}>Female</option>
+            <option value="Other" {% if default_values and default_values.gender == 'Other' %}selected{% endif %}>Other</option>
+          </select>
+        </div>
+
+        <!-- ID Proof -->
+        <div class="form-group">
+          <label for="id_proof_type">ID Proof:</label>
+          <select id="id_proof_type" name="id_proof_type" required onchange="toggleIdNumberInput()">
+            <option value="" disabled selected>Select ID Proof</option>
+            <option value="Aadhaar" {% if default_values and default_values.id_proof_type == 'Aadhaar' %}selected{% endif %}>Aadhaar Card</option>
+            <option value="PAN" {% if default_values and default_values.id_proof_type == 'PAN' %}selected{% endif %}>PAN Card</option>
+            <option value="Voter ID" {% if default_values and default_values.id_proof_type == 'Voter ID' %}selected{% endif %}>Voter ID Card</option>
+            <option value="Driving License" {% if default_values and default_values.id_proof_type == 'Driving License' %}selected{% endif %}>Driving License</option>
+          </select>
+        </div>
+
+        <!-- ID Number -->
+        <div class="form-group" id="id_number_group" style="display: none;">
+          <label for="id_proof_number">ID Number:</label>
+          <input type="text" id="id_proof_number" name="id_proof_number" value="{{ default_values.id_proof_number if default_values else '' }}" required>
+        </div>
+
+        <!-- Residential Stability -->
+        <div class="form-group">
+          <label for="residential_stability">Residential Stability:</label>
+          <select id="residential_stability" name="residential_stability" required>
+            <option value="" disabled selected>Select Stability</option>
+            <option value="Stable" {% if default_values and default_values.residential_stability == 'Stable' %}selected{% endif %}>Stable</option>
+            <option value="Unstable" {% if default_values and default_values.residential_stability == 'Unstable' %}selected{% endif %}>Unstable</option>
+          </select>
+        </div>
+
+        <!-- State and District -->
+        <div class="form-group">
+          <label for="state">State:</label>
+          <select id="state" name="state" required>
+            <option value="" disabled selected>Select State</option>
+            <!-- States will be populated by JavaScript -->
+          </select>
+        </div>
+          
+        <div class="form-group">
+          <label for="district">District:</label>
+          <select id="district" name="district" required>
+            <option value="" disabled selected>Select District</option>
+            <!-- Districts will be populated by JavaScript -->
+          </select>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address">Address / Area of Residence:</label>
+          <textarea id="address" name="address" rows="3" required>{{ default_values.address if default_values else '' }}</textarea>
+        </div>
+
+        <!-- Bail Surety / Nominee Details -->
+        <div class="form-group">
+          <h3 style="margin-bottom: 20px; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 8px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-user-shield"></i> Bail Surety / Nominee Details
+          </h3>
+          
+          <!-- Contact 1 -->
+          <div class="contact-group">
+            <h4><i class="fas fa-user-tie"></i> Bail Surety / Nominee Details 1</h4>
+            
+            <div class="form-group">
+              <label for="contact1_relation">Relationship to Prisoner:</label>
+              <select id="contact1_relation" name="contact1_relation" required>
+                <option value="" disabled selected>Select Relationship</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Spouse">Spouse</option>
+                <option value="Sibling">Sibling</option>
+                <option value="Son/Daughter">Son/Daughter</option>
+                <option value="Friend">Friend</option>
+                <option value="Relative">Relative</option>
+                <option value="Lawyer">Lawyer</option>
+                <option value="Employer">Employer</option>
+                <option value="Neighbor">Neighbor</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="contact1_name">Full Name:</label>
+              <input type="text" id="contact1_name" name="contact1_name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contact1_number">Phone Number:</label>
+              <input type="tel" id="contact1_number" name="contact1_number" 
+                     pattern="[0-9]{10}" title="10 digit phone number" required
+                     placeholder="9876543210">
+            </div>
+          </div>
+          
+          <!-- Contact 2 -->
+          <div class="contact-group">
+            <h4><i class="fas fa-user-tie"></i> Bail Surety / Nominee Details 2</h4>
+            
+            <div class="form-group">
+              <label for="contact2_relation">Relationship to Prisoner:</label>
+              <select id="contact2_relation" name="contact2_relation" required>
+                <option value="" disabled selected>Select Relationship</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Spouse">Spouse</option>
+                <option value="Sibling">Sibling</option>
+                <option value="Son/Daughter">Son/Daughter</option>
+                <option value="Friend">Friend</option>
+                <option value="Relative">Relative</option>
+                <option value="Lawyer">Lawyer</option>
+                <option value="Employer">Employer</option>
+                <option value="Neighbor">Neighbor</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="contact2_name">Full Name:</label>
+              <input type="text" id="contact2_name" name="contact2_name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contact2_number">Phone Number:</label>
+              <input type="tel" id="contact2_number" name="contact2_number" 
+                     pattern="[0-9]{10}" title="10 digit phone number" required
+                     placeholder="9876543210">
+            </div>
+          </div>
+        </div>
+
+        <!-- Reason for Bail -->
+        <div class="form-group">
+          <label for="reason">Reason for Bail Request:</label>
+          <textarea id="reason" name="reason" rows="6" required placeholder="Clearly state your reasons, circumstances, and any supporting arguments...">{{ default_values.reason if default_values else '' }}</textarea>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="button-group">
+          <button type="submit" class="submit-button">
+            <i class="fas fa-paper-plane"></i> Submit Application
+          </button>
+          <a href="{{ url_for('prisoner_dashboard') }}" class="secondary-button">
+            <i class="fas fa-times"></i> Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+
+<script>
+  // IPC data from Flask template
+  const ipcData = {{ ipc_data | tojson }};
+  
+  // State and district data
+  let statesData = [];
+  
+  // Function to update IPC fields (offense, cognizable, bailable)
+  // Update the updateFields function to include bailable and cognizable
+function updateFields() {
+  const section = document.getElementById('primary_ipc').value;
+  const offense = document.getElementById('primary_offense');
+  const bailable = document.getElementById('primary_bailable');
+  const cognizable = document.getElementById('primary_cognizable');
+
+  if (ipcData[section] && ipcData[section].length > 0) {
+      const entry = ipcData[section][0];
+      offense.value = entry.Offense;
+      bailable.value = entry.Bailable || "Not specified";
+      cognizable.value = entry.Cognizable || "Not specified";
+  } else {
+      offense.value = "";
+      bailable.value = "";
+      cognizable.value = "";
+  }
+}
+
+// Add new function for prior record fields
+function updatePriorRecordFields() {
+  const section = document.getElementById('prior_ipc').value;
+  const offense = document.getElementById('prior_offense');
+
+  if (ipcData[section] && ipcData[section].length > 0) {
+      const entry = ipcData[section][0];
+      offense.value = entry.Offense;
+  } else {
+      offense.value = "";
+  }
+}
+  
+  // Function to toggle ID number input based on ID proof selection
+  function toggleIdNumberInput() {
+    const idProofType = document.getElementById('id_proof_type');
+    const idNumberGroup = document.getElementById('id_number_group');
+    const idNumberInput = document.getElementById('id_proof_number');
+    
+    if (idProofType.value) {
+      idNumberGroup.style.display = 'block';
+      idNumberInput.required = true;
+      
+      // Set input pattern based on ID type
+      switch(idProofType.value) {
+        case 'Aadhaar':
+          idNumberInput.pattern = '^[2-9]{1}[0-9]{11}$';
+          idNumberInput.title = '12-digit Aadhaar number (no spaces/hyphens)';
+          break;
+        case 'PAN':
+          idNumberInput.pattern = '[A-Z]{5}[0-9]{4}[A-Z]{1}';
+          idNumberInput.title = '10-character PAN (e.g., ABCDE1234F)';
+          break;
+        case 'Voter ID':
+          idNumberInput.pattern = '[A-Z]{3}[0-9]{7}';
+          idNumberInput.title = 'Voter ID number (3 letters + 7 digits)';
+          break;
+        case 'Driving License':
+          idNumberInput.pattern = '[A-Z0-9]{10,16}';
+          idNumberInput.title = 'Driving License number';
+          break;
+      }
+    } else {
+      idNumberGroup.style.display = 'none';
+      idNumberInput.required = false;
+    }
+  }
+  
+  // Function to update bail score meter
+  function updateBailScoreMeter() {
+    const bailScoreInput = document.getElementById('bail_score');
+    const meterFill = document.getElementById('meter-fill');
+    const score = parseFloat(bailScoreInput.value) || 0;
+    
+    // Update meter width
+    meterFill.style.width = `${score}%`;
+    
+    // Update meter color based on score
+    if (score < 30) {
+      meterFill.style.background = '#ff4d4d'; // Red
+    } else if (score < 70) {
+      meterFill.style.background = '#f9cb28'; // Yellow
+    } else {
+      meterFill.style.background = '#4CAF50'; // Green
+    }
+  }
+  
+  // Function to populate states and districts
+  async function loadStatesAndDistricts() {
+    try {
+      const response = await fetch('/static/states-and-districts.json');
+      statesData = await response.json();
+      
+      const stateSelect = document.getElementById('state');
+      stateSelect.innerHTML = '<option value="" disabled selected>Select State</option>';
+      
+      statesData.states.forEach(state => {
+        const option = document.createElement('option');
+        option.value = state.state;
+        option.textContent = state.state;
+        stateSelect.appendChild(option);
+      });
+
+      // Set the default state if provided
+      {% if default_values and default_values.state %}
+        stateSelect.value = '{{ default_values.state }}';
+        populateDistricts();
+        
+        // Set the default district if provided
+        {% if default_values and default_values.district %}
+          setTimeout(() => {
+            document.getElementById('district').value = '{{ default_values.district }}';
+          }, 100);
+        {% endif %}
+      {% endif %}
+    } catch (error) {
+      console.error('Error loading states and districts:', error);
+    }
+  }
+  
+  // Function to populate districts based on selected state
+  function populateDistricts() {
+    const stateSelect = document.getElementById('state');
+    const districtSelect = document.getElementById('district');
+    const selectedState = stateSelect.value;
+    
+    districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+    
+    if (!selectedState) return;
+    
+    const stateInfo = statesData.states.find(state => state.state === selectedState);
+    if (stateInfo) {
+      stateInfo.districts.forEach(district => {
+        const option = document.createElement('option');
+        option.value = district;
+        option.textContent = district;
+        districtSelect.appendChild(option);
+      });
+    }
+  }
+  
+  // Initialize form when DOM is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Load states and districts
+    loadStatesAndDistricts();
+    
+    // Set up event listeners
+    document.getElementById('state').addEventListener('change', populateDistricts);
+    
+    // Initialize form fields
+    toggleIdNumberInput();
+    
+    // Initialize bail score meter
+    updateBailScoreMeter();
+    
+    // Initialize IPC fields if primary_ipc is set
+    {% if default_values and default_values.primary_ipc %}
+      updateFields();
+    {% endif %}
+    
+    // Show ID number field if ID proof type is already selected
+    {% if default_values and default_values.id_proof_type %}
+      document.getElementById('id_number_group').style.display = 'block';
+    {% endif %}
+    
+    // Combine name fields into full_name on form submission
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const firstName = document.getElementById('first_name').value.trim();
+      const middleName = document.getElementById('middle_name').value.trim();
+      const lastName = document.getElementById('last_name').value.trim();
+      
+      // Create hidden input for full_name
+      const fullNameInput = document.createElement('input');
+      fullNameInput.type = 'hidden';
+      fullNameInput.name = 'full_name';
+      fullNameInput.value = `${firstName} ${middleName ? middleName + ' ' : ''}${lastName}`.trim();
+      
+      this.appendChild(fullNameInput);
+    });
+  });
+</script>
+</body>
+</html>

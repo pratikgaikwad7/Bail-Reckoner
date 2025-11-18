@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bail Approval</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .title { font-size: 18px; font-weight: bold; }
+        .section { margin-bottom: 15px; }
+        .label { font-weight: bold; }
+        .footer { margin-top: 50px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">BAIL APPROVAL ORDER</div>
+    </div>
+    
+    <div class="section">
+        <span class="label">Case No:</span> {{ application.fir_number }}
+    </div>
+    
+    <div class="section">
+        <span class="label">Prisoner:</span> {{ application.full_name }}
+    </div>
+    
+    <div class="section">
+        <span class="label">Judge:</span> {{ judge.name }}
+    </div>
+    
+    <div class="section">
+        <span class="label">Court:</span> {{ judge.court_type }}, {{ judge.district }}
+    </div>
+    
+    <div class="section">
+        <span class="label">Bail Amount:</span> ₹{{ bail_amount }}
+    </div>
+    
+    <div class="section">
+        <div class="label">Conditions:</div>
+        <ul>
+            {% for condition in conditions.split('\n') %}
+                {% if condition.strip() %}
+                    <li>{{ condition.strip() }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="footer">
+        <div>Date: {{ current_date }}</div>
+        <div>Signed: _________________</div>
+    </div>
+</body>
+</html>
